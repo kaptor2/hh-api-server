@@ -7,16 +7,10 @@
     "test": "test",
     "start": "nodemon --exec ts-node -- ./server/server.ts"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/kaptor2/hh-api-server.git"
-  },
+
   "author": "Konstantin",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/kaptor2/hh-api-server/issues"
-  },
-  "homepage": "https://github.com/kaptor2/hh-api-server#readme",
+
   "dependencies": {
     "argon2": "^0.27.0",
     "body-parser": "^1.19.0",
