@@ -3,7 +3,9 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
-//import { graphqlHTTP } from 'express-graphql';
+import { graphqlHTTP } from 'express-graphql';
+
+import rootSchema from "./schema";
 
 dotenv.config();
 
@@ -16,7 +18,10 @@ app.use(cors({
 app.use(cookieParser());
 app.use(bodyParser.json());
 
-//app.use('/graphql', graphqlHTTP({}));
+app.use('/graphql', graphqlHTTP({
+    schema: rootSchema,
+    graphiql: true
+}));
 
 app.listen(process.env.PORT, () => {
     console.log(`server is running on port: ${process.env.PORT}`)
