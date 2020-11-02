@@ -1,8 +1,13 @@
+import { AxiosResponse } from 'axios';
 import {
     GraphQLObjectType,
     GraphQLString,
-    GraphQLSchema
+    GraphQLSchema,
+    GraphQLList,
+    GraphQLID
 } from 'graphql';
+
+import { citysApi } from '../api/citysApi';
 
 const CityType = new GraphQLObjectType({
     name: 'GetCitys',
@@ -12,14 +17,22 @@ const CityType = new GraphQLObjectType({
     })
 });
 
+type test = {
+    id: string,
+    name: string
+}
+
 const Query = new GraphQLObjectType({
     name: 'Query',
     fields: {
         city: {
-            type: CityType,
-            args: { id: { type: GraphQLString } },
-            resolve(parent, args) {
-
+            type: new GraphQLList(CityType),
+            args: { id: { type: GraphQLID } },
+            async resolve(params, { id }) {
+                const result: AxiosResponse<Array<test>> = await citysApi.getAll();
+                const data = result.data.map(({ id, name }) => ({ id, name })).filter(el => id ? el.id == id : true);
+                console.log(data)
+                return data;
             }
         }
     }
